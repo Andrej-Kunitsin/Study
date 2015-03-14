@@ -8,7 +8,7 @@ public class VLifs implements Visitor
 	@Override
 	public void action(Node p)
 	{
-		if(p.left == null && p.rigth == null)
+		if(p.left == null && p.right == null)
 		{
 			lifs++;
 		}

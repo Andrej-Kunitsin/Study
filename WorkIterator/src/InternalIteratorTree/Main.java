@@ -12,6 +12,9 @@ public class Main
 		System.out.println("размер "+tree.size());
 		System.out.println("кол-во листов "+tree.countLeafs());
 		System.out.println("кол-во Nodes "+tree.countNodes());
+		for (int i : tree){
+			System.out.print(i+", ");
+		}
 	}
 
 }

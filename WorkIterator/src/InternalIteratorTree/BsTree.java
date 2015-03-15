@@ -55,7 +55,7 @@ public class BsTree implements Iterable<Integer> {
 			}
 		}
 	}
-	
+
 	public void init(int[] array) {
 		if (array == null || array.length == 0) {
 			array = new int[0];
@@ -161,60 +161,66 @@ public class BsTree implements Iterable<Integer> {
 		printNode(p.right);
 	}
 
+	/*
+	 * @Override public Iterator<Integer> iterator() {
+	 * 
+	 * return new TreeListIter(root); }
+	 * 
+	 * private void visit2(Node p, Visitor v) { if (p == null) return; if
+	 * (!p.isVisited) { visit2(p.left, v); } p.isVisited = true;
+	 * 
+	 * }
+	 * 
+	 * class TreeListIter implements Iterator<Integer> { Node next; int index =
+	 * size(); VIter v = new VIter();
+	 * 
+	 * public TreeListIter(Node root) { if (root == null) return; next = root;
+	 * while (next.left != null) next = next.left; }
+	 * 
+	 * @Override public boolean hasNext() { return next != null; }
+	 * 
+	 * @Override public Integer next() { Node r = next; if (next.right != null)
+	 * { next = next.right; while (next.left != null) next = next.left; return
+	 * r.data; } else while (true) { if (next.parent == null) { next = null;
+	 * return r.data; } if (next.parent.left == next) { next = next.parent;
+	 * return r.data; } next = next.parent; } }
+	 * 
+	 * @Override public void remove() { } }
+	 */
 	@Override
 	public Iterator<Integer> iterator() {
-
-		return new TreeListIter(root);
+		return new BsTreeIteratorInternal(root);
 	}
 
-	private void visit2(Node p, Visitor v) {
-		if (p == null)
-			return;
-		if (!p.isVisited) {
-			visit2(p.left, v);
-		}
-		p.isVisited = true;
+	public class BsTreeIteratorInternal implements Iterator<Integer> {
+		Node p = null;
+		Node last = null;
 
-	}
-
-	class TreeListIter implements Iterator<Integer> {
-		Node next;
-		int index = size();
-		VIter v = new VIter();
-
-		public TreeListIter(Node root) {
-			if (root == null)
-				return;
-			next = root;
-			while (next.left != null)
-				next = next.left;
+		BsTreeIteratorInternal(Node root) {
+			p = root;
 		}
 
 		@Override
 		public boolean hasNext() {
-			return next != null;
+			return p.left != null || p.right != null || !p.parent.isVisited;
 		}
 
 		@Override
 		public Integer next() {
-			Node r = next;
-			if (next.right != null) {
-				next = next.right;
-				while (next.left != null)
-					next = next.left;
-				return r.data;
-			} else
-				while (true) {
-					if (next.parent == null) {
-						next = null;
-						return r.data;
-					}
-					if (next.parent.left == next) {
-						next = next.parent;
-						return r.data;
-					}
-					next = next.parent;
-				}
+			while (p.left != null && !p.left.isVisited)
+				p = p.left;
+
+			int data = p.data;
+			p.isVisited = true;
+
+			if (p.right != null && !p.right.isVisited) {
+				p = p.right;
+			} else {
+				while (p.isVisited)
+					p = p.parent;
+			}
+
+			return data;
 		}
 
 		@Override

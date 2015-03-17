@@ -53,7 +53,7 @@ public class ResizePanelButton extends JPanel implements MouseListener,
 		bottomLeft.setCursor(Cursor.getPredefinedCursor(Cursor.SW_RESIZE_CURSOR));
 		bottomRigth.setBounds(figure.getWidth() - 10, figure.getHeight() - 10,
 				10, 10);
-		bottomLeft.setCursor(Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR));
+		bottomRigth.setCursor(Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR));
 		centr.setBounds(figure.getWidth() / 2 - 5, figure.getHeight() / 2 - 5,
 				10, 10);
 		centr.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));

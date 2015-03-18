@@ -2,12 +2,10 @@ package myNew;
 
 import javax.swing.JFrame;
 
-public class Frame extends JFrame
-{
+public class Frame extends JFrame {
 	private static final long serialVersionUID = 1L;
 
-	public Frame()
-	{
+	public Frame() {
 		setLayout(null);
 		setTitle("App for add person");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

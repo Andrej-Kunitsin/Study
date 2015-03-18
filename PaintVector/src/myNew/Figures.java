@@ -1,6 +1,5 @@
 package myNew;
 
-public enum Figures
-{
+public enum Figures {
 	Rectangl, Cicle;
 }

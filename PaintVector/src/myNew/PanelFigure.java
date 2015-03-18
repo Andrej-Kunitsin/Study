@@ -6,21 +6,28 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import buttons.ResizeComponents;
+
 public class PanelFigure extends JPanel implements MouseListener,
-		MouseMotionListener, FocusListener {
+		MouseMotionListener, FocusListener, ComponentListener {
 	private static final long serialVersionUID = 1L;
 
 	public Figures fig;
 	private int dx = 0;
 	private int dy = 0;
+
+	private ArrayList<SizeMoveListener> sml = new ArrayList<SizeMoveListener>();
 
 	public PanelFigure() {
 	}
@@ -32,6 +39,7 @@ public class PanelFigure extends JPanel implements MouseListener,
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		addFocusListener(this);
+		addComponentListener(this);
 	}
 
 	@Override
@@ -50,6 +58,29 @@ public class PanelFigure extends JPanel implements MouseListener,
 		}
 	}
 
+	private void SizeChangeAction() {
+		for (SizeMoveListener s : sml) {
+			s.checkMove();
+		}
+
+	}
+
+	public void addSizeChangeListener(SizeMoveListener ss) {
+		sml.add(ss);
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		SizeChangeAction();
+
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		SizeChangeAction();
+
+	}
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 		dx = e.getX();
@@ -65,7 +96,7 @@ public class PanelFigure extends JPanel implements MouseListener,
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		requestFocusInWindow();
+		requestFocus();
 		repaint();
 	}
 
@@ -78,7 +109,7 @@ public class PanelFigure extends JPanel implements MouseListener,
 	@Override
 	public void focusLost(FocusEvent e) {
 		setOpaque(false);
-		for (Component cc : getComponents()){
+		for (Component cc : getComponents()) {
 			cc.setVisible(false);
 		}
 		repaint();
@@ -86,8 +117,9 @@ public class PanelFigure extends JPanel implements MouseListener,
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		setFocusable(true);
-		new ResizePanelButton(this);
+		requestFocus();
+		//setFocusable(true);
+		new ResizeComponents(this);
 		repaint();
 	}
 
@@ -101,5 +133,17 @@ public class PanelFigure extends JPanel implements MouseListener,
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 }

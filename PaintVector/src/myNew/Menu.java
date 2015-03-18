@@ -15,8 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class Menu extends JMenuBar
-{
+public class Menu extends JMenuBar {
 
 	private static final long serialVersionUID = 1L;
 	JMenu jMenu;
@@ -25,8 +24,7 @@ public class Menu extends JMenuBar
 	JMenuItem itemClose;
 	PanelDraw panel;
 
-	public Menu(PanelDraw panelDraw)
-	{
+	public Menu(PanelDraw panelDraw) {
 		panel = panelDraw;
 
 		jMenu = new JMenu("File");
@@ -42,36 +40,32 @@ public class Menu extends JMenuBar
 
 		add(jMenu);
 
-		itemLoad.addActionListener(new ActionListener()
-		{
+		itemLoad.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				Serializ serializ = new Serializ();
 				JFileChooser fileChooser = new JFileChooser();
 				int r = fileChooser.showOpenDialog(null);
-				if (r == JFileChooser.APPROVE_OPTION)
-				{
+				if (r == JFileChooser.APPROVE_OPTION) {
 					File file = fileChooser.getSelectedFile();
-					if (file.getAbsolutePath().endsWith(".xml"))
-					{
-						List<Component> figures = serializ.openXML(file);
-						for (Component figure : figures)
-						{
-							panel.add(figure);
-						}
+					List<Component> figures = null;
+					if (file.getAbsolutePath().endsWith(".xml")) {
+						figures = serializ.openXML(file);
+					} else if (file.getAbsolutePath().endsWith(".json")) {
+						figures = serializ.openJSON(file);
+					}
+					for (Component figure : figures) {
+						panel.add(figure);
 						panel.repaint();
 					}
 				}
 			}
 		});
-		itemSave.addActionListener(new ActionListener()
-		{
+		itemSave.addActionListener(new ActionListener() {
 			Serializ serializ = new Serializ();
 
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				List<Component> list = new ArrayList<Component>(Arrays
 						.asList(panel.getComponents()));
 
@@ -81,19 +75,18 @@ public class Menu extends JMenuBar
 				fileChooser.addChoosableFileFilter(new FileNameExtensionFilter(
 						"*.xml", "xml"));
 				int r = fileChooser.showSaveDialog(null);
-				if (r == JFileChooser.APPROVE_OPTION)
-				{
+				if (r == JFileChooser.APPROVE_OPTION) {
 					FileFilter ff = fileChooser.getFileFilter();
 					System.out.println(ff.getDescription());
 					String format = "";
 					File file;
-					switch (ff.getDescription())
-					{
+
+					switch (ff.getDescription()) {
 					case "*.json":
 						format = "json";
 						file = new File(fileChooser.getSelectedFile()
 								.getAbsolutePath() + "." + format);
-						// serializ.saveJSON(file,list);
+						serializ.saveJSON(file, list);
 						break;
 
 					case "*.xml":
@@ -102,16 +95,14 @@ public class Menu extends JMenuBar
 								.getAbsolutePath() + "." + format);
 						serializ.saveXML(file, list);
 						break;
+
 					case "All Files":
 						file = fileChooser.getSelectedFile();
-						if (file.getAbsolutePath().endsWith(".xml"))
-						{
+						if (file.getAbsolutePath().endsWith(".xml")) {
 							serializ.saveXML(file, list);
-						} else if (file.getAbsolutePath().endsWith(".json"))
-						{
+						} else if (file.getAbsolutePath().endsWith(".json")) {
 							// serializ.saveJSON(file, sets.list);
-						} else
-						{
+						} else {
 							throw new IllegalArgumentException();
 						}
 					}
@@ -120,12 +111,10 @@ public class Menu extends JMenuBar
 			}
 		});
 
-		itemClose.addActionListener(new ActionListener()
-		{
+		itemClose.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});

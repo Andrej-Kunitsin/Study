@@ -6,16 +6,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class PanelButton extends JPanel implements ActionListener
-{
+public class PanelButton extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	JButton buttonRect;
 	JButton buttonOval;
 	JButton buttonClear;
 	Sets sets;
 
-	public PanelButton(Sets sets)
-	{
+	public PanelButton(Sets sets) {
 		this.sets = sets;
 		setLayout(null);
 		buttonRect = new JButton("Квадрат");
@@ -33,16 +31,12 @@ public class PanelButton extends JPanel implements ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e)
-	{
-		if (e.getActionCommand().equals("Квадрат"))
-		{
+	public void actionPerformed(ActionEvent e) {
+		if (e.getActionCommand().equals("Квадрат")) {
 			sets.mFigure = Figures.Rectangl;
-		} else if (e.getActionCommand().equals("Овал"))
-		{
+		} else if (e.getActionCommand().equals("Овал")) {
 			sets.mFigure = Figures.Cicle;
-		} else if (e.getActionCommand().equals("Очистка"))
-		{
+		} else if (e.getActionCommand().equals("Очистка")) {
 			sets.mPanelDraw.removeAll();
 			sets.mPanelDraw.repaint();
 		}

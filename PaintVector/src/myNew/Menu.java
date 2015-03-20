@@ -56,8 +56,9 @@ public class Menu extends JMenuBar {
 					}
 					for (Component figure : figures) {
 						panel.add(figure);
-						panel.repaint();
+						
 					}
+					panel.repaint();
 				}
 			}
 		});

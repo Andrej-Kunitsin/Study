@@ -37,7 +37,7 @@ public class NewBall extends JPanel {
 				contain.repaint();
 			}
 		};
-		timer = new Timer(0, timerListener);
+		timer = new Timer(10, timerListener);
 		timer.start();
 	}
 

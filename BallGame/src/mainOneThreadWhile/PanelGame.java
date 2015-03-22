@@ -9,14 +9,16 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-public class PanelGame extends JPanel implements MouseListener,Runnable {
+public class PanelGame extends JPanel implements MouseListener {
 
 	private static final long serialVersionUID = 1L;
 	List<NewBall> list = new LinkedList<NewBall>();
 
 	public PanelGame() {
-		
+		setBackground(Color.RED);
+		addMouseListener(this);
 	}
+
 
 	@Override
 	public void paint(Graphics g) {
@@ -28,8 +30,11 @@ public class PanelGame extends JPanel implements MouseListener,Runnable {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		list.add(new NewBall(e.getX(), e.getY(), this));
-	}
+		NewBall ball = new NewBall(e.getX(), e.getY(), this);
+		list.add(ball);
+		Thread t = new Thread(ball);
+		t.start();
+		}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -47,9 +52,5 @@ public class PanelGame extends JPanel implements MouseListener,Runnable {
 	public void mouseReleased(MouseEvent e) {
 	}
 
-	@Override
-	public void run() {
-		setBackground(Color.WHITE);
-		addMouseListener(this);
-	}
+	
 }

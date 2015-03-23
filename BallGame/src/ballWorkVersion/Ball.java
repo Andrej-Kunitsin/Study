@@ -1,4 +1,4 @@
-package mainThreadTimer.copy;
+package ballWorkVersion;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -8,14 +8,17 @@ import java.util.Random;
 
 import javax.swing.JPanel;
 
-
-public class Ball extends JPanel
+public class Ball extends JPanel implements InterficeFigur
 {
 	int dx;
 	int dy;
 	Color col;
 
-	public Ball(Point p) 
+	public Ball()
+	{
+	}
+
+	public Ball(Point p)
 	{
 		setLocation(p);
 		setSize(30, 30);
@@ -27,19 +30,19 @@ public class Ball extends JPanel
 	}
 
 	@Override
-	public void paint(Graphics g) 
+	public void paint(Graphics g)
 	{
 		Graphics2D gg = (Graphics2D) g;
 		gg.setColor(col);
 		gg.fillOval(1, 1, 28, 28);
 	}
-
+@Override
 	public void move()
 	{
 		JPanel pp = (JPanel) getParent();
-		if(getX() <= 0 || getX() >=  pp.getWidth()-30)
+		if (getX() <= 0 || getX() >= pp.getWidth() - 30)
 			dx *= -1;
-		if(getY() <= 0 || getY() >=  pp.getHeight()-30)
+		if (getY() <= 0 || getY() >= pp.getHeight() - 30)
 			dy *= -1;
 
 		Point p = getLocation();

@@ -1,4 +1,4 @@
-package server;
+package serverDontTread;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -32,6 +32,9 @@ public class MainServ
 			{
 				System.out.println("соеденения не было...");
 				listenerAllClients();
+			} finally
+			{
+				ss.close();
 			}
 		}
 	}

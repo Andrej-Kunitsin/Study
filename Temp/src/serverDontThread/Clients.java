@@ -1,4 +1,4 @@
-package serverDontTread;
+package serverDontThread;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

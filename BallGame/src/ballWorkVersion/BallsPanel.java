@@ -38,22 +38,7 @@ public class BallsPanel extends JPanel implements MouseListener
 		}
 	}
 
-	class ActionBallsMove implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e)
-		{
-			Component[] list = getComponents();
-			for (Component b : list)
-			{
-				Ball bb = (Ball) b;
-				bb.move();
-				bb.repaint();
-			}
-		}
-	}
-
-	class ThreadBallsMove extends Thread
+		class ThreadBallsMove extends Thread
 	{
 		@Override
 		public void run()
@@ -65,7 +50,6 @@ public class BallsPanel extends JPanel implements MouseListener
 					Component[] list = getComponents();
 					for (Component b : list)
 					{
-
 						InterficeFigur bb = (InterficeFigur) b;
 						bb.move();
 						b.repaint();
